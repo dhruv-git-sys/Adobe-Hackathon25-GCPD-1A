@@ -1,15 +1,16 @@
 # Adobe India Hackathon 2025
+> [**Connecting the Dots ...**](https://d8it4huxumps7.cloudfront.net/uploads/submissions_case/6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc.pdf)
 
 ## 👥 Team
 
 **Team Name:** 🚀 _GCPD_  
 **College:** 🎓 _The National Institute of Engineering, Mysore_
 
-| Name               | Role          |
-|--------------------|---------------|
-| Ankit Kumar Shah   | Team Leader   |
-| Dhruv Agrawal      | Team Member   |
-| Arnav Sharma       | Team Member   |
+| Name                                                  |     Role    |
+|-------------------------------------------------------|-------------|
+| [Ankit Kumar Shah ](https://github.com/ankitkrshah30) |**🧑‍✈️Leader** |
+| [Dhruv Agrawal](https://github.com/dhruv-git-sys)     |🧑‍💼Member     |
+| [Arnav Sharma](https://github.com/ArnavSharma2908/)   |🧑‍💼 Member    |
 
 ---
 
