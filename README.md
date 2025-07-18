@@ -19,7 +19,7 @@
 ### ✅ Round 1A – Structured Outline Extractor
 
 - Input: 📄 PDF file (≤ 50 pages)
-- Output: 📝 JSON with @title@, @H1@, @H2@, @H3@ headings + page numbers
+- Output: 📝 JSON with `title`, `H1`, `H2`, `H3` headings + page numbers
 - Must run offline in Docker (CPU-only, ≤10s, ≤200MB model) 💻
 - JSON Example:
 ```json
@@ -46,7 +46,7 @@
 
 ```bash
 docker build --platform linux/amd64 -t gcpd-pdf .
-docker run --rm @  -v $(pwd)/input:/app/input @  -v $(pwd)/output:/app/output @  --network none @  gcpd-pdf
+docker run --rm `  -v $(pwd)/input:/app/input `  -v $(pwd)/output:/app/output `  --network none `  gcpd-pdf
 ```
 
 ## 🛠 Proposed Solution
