@@ -8,9 +8,9 @@
 
 | Name                                                  |     Role    |
 |-------------------------------------------------------|-------------|
-| [Ankit Kumar Shah ](https://github.com/ankitkrshah30) |**🧑‍✈️Leader** |
-| [Dhruv Agrawal](https://github.com/dhruv-git-sys)     |🧑‍💼Member     |
-| [Arnav Sharma](https://github.com/ArnavSharma2908/)   |🧑‍💼 Member    |
+| [Ankit Kumar Shah ](https://github.com/ankitkrshah30) |**👑 Leader** |
+| [Dhruv Agrawal](https://github.com/dhruv-git-sys)     |⭐ Member     |
+| [Arnav Sharma](https://github.com/ArnavSharma2908/)   |⭐ Member    |
 
 ---
 
