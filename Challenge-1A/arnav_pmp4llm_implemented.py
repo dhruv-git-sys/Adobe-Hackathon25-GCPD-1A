@@ -56,10 +56,5 @@ def pdf_to_outline_json(pdf_path: str) -> dict:
     return result
 
 
-if __name__ == '__main__':
-	
-	#YOUR PATH HERE
-    pdf_path = r'Research.pdf'
-	
-    outline_json = pdf_to_outline_json(pdf_path)
-    print(json.dumps(outline_json, indent=2))
+def main(pdf):
+	return pdf_to_outline_json(pdf)
