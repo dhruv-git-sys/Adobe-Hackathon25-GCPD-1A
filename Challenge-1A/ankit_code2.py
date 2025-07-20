@@ -144,3 +144,5 @@ def process_pdf(pdf_path):
 def main(pdf):
 	result = process_pdf(pdf)
 	return (result)
+
+print(main("Research.pdf"))
