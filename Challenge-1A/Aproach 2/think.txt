@@ -1,0 +1,66 @@
+REFACTORING PLAN FOR RAW.PY
+==============================
+
+CURRENT STATE ANALYSIS:
+- raw.py uses PyMuPDF to extract PDF data
+- Saves structured data to JSON file
+- Returns complete dictionary with metadata and pages
+- Each page contains blocks -> lines -> spans structure
+
+TARGET STATE REQUIREMENTS:
+1. Remove JSON dependency completely
+2. Return in-memory list structure: [page_1_segments, page_2_segments, ...]
+3. Implement Segment class for uniform formatting blocks
+4. Merge consecutive lines with identical formatting properties
+5. Clean and filter empty/whitespace-only segments
+6. Maintain original order within pages
+
+SEGMENT CLASS DESIGN:
+- Formatting attributes: size, flags, bidi, char_flags, font, color, alpha, ascender, descender
+- Content attribute: text (merged and stripped)
+- Derived properties: len (text length), link (default "...")
+- Methods: __init__(), __str__() (return self.__dict__)
+
+MERGING LOGIC:
+- Compare formatting properties between consecutive spans/lines
+- Merge if ALL formatting properties match exactly
+- Combine text content with space separation
+- Use first line's formatting properties for the segment
+
+DATA CLEANING:
+- Strip leading/trailing whitespace from final text
+- Skip segments with empty or whitespace-only text
+- Preserve original ordering from PDF
+
+PERFORMANCE CONSIDERATIONS:
+- Process pages sequentially to maintain order
+- Use efficient string operations for text merging
+- Minimize object creation overhead
+- Direct list operations instead of file I/O
+
+IMPLEMENTATION STEPS:
+1. Define Segment class with required attributes and methods
+2. Remove JSON import and file writing code
+3. Modify extract_pdf_data to return list structure
+4. Implement segment merging logic with formatting comparison
+5. Add text cleaning and filtering
+6. Ensure proper ordering is maintained
+7. Test with current PDF to verify output structure
+
+KEY FORMATTING PROPERTIES FOR COMPARISON:
+- size (font size)
+- flags (bold, italic, etc.)
+- bidi (bidirectional text)
+- char_flags (character flags)
+- font (font family)
+- color (text color)
+- alpha (transparency)
+- ascender (font ascender)
+- descender (font descender)
+
+EDGE CASES TO HANDLE:
+- Empty pages
+- Pages with only whitespace
+- Mixed formatting within same visual line
+- Single character segments
+- Special characters and Unicode
