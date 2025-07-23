@@ -1,66 +1,82 @@
-REFACTORING PLAN FOR RAW.PY
-==============================
+STRUCTURED OUTLINE EXTRACTOR - PREDICTION MODEL PLAN
+==================================================
 
-CURRENT STATE ANALYSIS:
-- raw.py uses PyMuPDF to extract PDF data
-- Saves structured data to JSON file
-- Returns complete dictionary with metadata and pages
-- Each page contains blocks -> lines -> spans structure
+PROBLEM ANALYSIS:
+- Input: PDF files converted to JSON segments (result.json format)
+- Each segment has: size, flags, font, color, text, position info
+- Output: Classify segments as title, H1, H2, H3, or skip
+- Target: JSON with title and hierarchical outline
 
-TARGET STATE REQUIREMENTS:
-1. Remove JSON dependency completely
-2. Return in-memory list structure: [page_1_segments, page_2_segments, ...]
-3. Implement Segment class for uniform formatting blocks
-4. Merge consecutive lines with identical formatting properties
-5. Clean and filter empty/whitespace-only segments
-6. Maintain original order within pages
+TRAINING DATA ANALYSIS:
+- file01.pdf/json: LTC application form → title only, no outline
+- file02.pdf/json: Testing syllabus → title + H1/H2 structure  
+- file03.pdf/json: Research paper → title + hierarchical structure
+- file04.pdf/json: STEM flyer → title + H1 structure
+- file05.pdf/json: Event flyer → H1 only, no title
 
-SEGMENT CLASS DESIGN:
-- Formatting attributes: size, flags, bidi, char_flags, font, color, alpha, ascender, descender
-- Content attribute: text (merged and stripped)
-- Derived properties: len (text length), link (default "...")
-- Methods: __init__(), __str__() (return self.__dict__)
+KEY FEATURES FOR CLASSIFICATION:
+1. Text Features:
+   - Font size (relative to document)
+   - Font weight/style (bold, regular)
+   - Text length
+   - Text content patterns (capitalization, keywords)
+   - Position on page (top segments likely titles)
 
-MERGING LOGIC:
-- Compare formatting properties between consecutive spans/lines
-- Merge if ALL formatting properties match exactly
-- Combine text content with space separation
-- Use first line's formatting properties for the segment
+2. Formatting Features:
+   - flags (bold=20, regular=4)
+   - font family (bold variants vs regular)
+   - color (emphasis colors)
+   - char_flags (formatting emphasis)
 
-DATA CLEANING:
-- Strip leading/trailing whitespace from final text
-- Skip segments with empty or whitespace-only text
-- Preserve original ordering from PDF
+3. Contextual Features:
+   - Relative position in document
+   - Size compared to other segments
+   - Text patterns (ALL CAPS, Title Case, etc.)
 
-PERFORMANCE CONSIDERATIONS:
-- Process pages sequentially to maintain order
-- Use efficient string operations for text merging
-- Minimize object creation overhead
-- Direct list operations instead of file I/O
+IMPLEMENTATION STRATEGY:
 
-IMPLEMENTATION STEPS:
-1. Define Segment class with required attributes and methods
-2. Remove JSON import and file writing code
-3. Modify extract_pdf_data to return list structure
-4. Implement segment merging logic with formatting comparison
-5. Add text cleaning and filtering
-6. Ensure proper ordering is maintained
-7. Test with current PDF to verify output structure
+Phase 1: Data Preparation
+- Extract all training data from PDF→JSON conversions
+- Create feature matrix from segment properties
+- Label data based on expected JSON outputs
+- Handle class imbalance (few titles vs many paragraphs)
 
-KEY FORMATTING PROPERTIES FOR COMPARISON:
-- size (font size)
-- flags (bold, italic, etc.)
-- bidi (bidirectional text)
-- char_flags (character flags)
-- font (font family)
-- color (text color)
-- alpha (transparency)
-- ascender (font ascender)
-- descender (font descender)
+Phase 2: Feature Engineering
+- Normalize font sizes within documents
+- Create relative size rankings
+- Extract text pattern features
+- Add positional features (page number, segment order)
 
-EDGE CASES TO HANDLE:
-- Empty pages
-- Pages with only whitespace
-- Mixed formatting within same visual line
-- Single character segments
-- Special characters and Unicode
+Phase 3: Model Selection
+- Start with Rule-Based approach (fast, interpretable)
+- Add ML classifier (Random Forest/SVM for small data)
+- Keep models lightweight for Docker constraints
+
+Phase 4: Hierarchical Logic
+- Implement hierarchy detection (H1 > H2 > H3)
+- Add post-processing for logical structure
+- Handle edge cases (multiple titles, missing levels)
+
+Phase 5: Integration & Testing
+- Integrate with existing Code.py
+- Test on all training files
+- Optimize for speed (<10s) and memory (<200MB)
+
+EXPECTED CHALLENGES:
+- Limited training data (5 files)
+- Diverse document formats
+- Hierarchical structure detection
+- Title vs H1 distinction
+
+DELIVERABLES:
+1. Think.txt (this plan)
+2. model_trainer.py (training pipeline)
+3. outline_predictor.py (prediction model)
+4. Updated Code.py with prediction integration
+5. Test results on training data
+
+SUCCESS METRICS:
+- Correct title identification
+- Proper heading hierarchy
+- Fast processing (<10s)
+- Memory efficient (<200MB)
