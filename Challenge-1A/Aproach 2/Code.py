@@ -1,6 +1,7 @@
 # PyMuPDF
 import fitz
 from json import dump
+import sys
 
 class Segment:
     """Represents a contiguous block of text with uniform formatting"""
@@ -78,3 +79,14 @@ def extract_pdf_data(pdf_path, out_path=None):
             dump(pages_segments, f, indent=2, default = lambda x: x.__dict__)
 
     return pages_segments                   # return list of page segment lists
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print("Usage: python Code.py input.pdf output.json")
+        sys.exit(1)
+    
+    input_pdf = sys.argv[1]
+    output_json = sys.argv[2]
+
+    extract_pdf_data(input_pdf, output_json)

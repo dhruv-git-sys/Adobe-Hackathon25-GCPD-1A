@@ -66,7 +66,7 @@ def main(pdf_path, output_path):
         print(f"Processing {pdf_path}...")
         
         # Extract segments from PDF
-        segments_data = extract_pdf_data(pdf_path, "temp_segments.json")
+        segments_data = extract_pdf_data(pdf_path)#, "temp_segments.json")
         
         # Extract outline structure
         extractor = OutlineExtractor()
@@ -85,8 +85,11 @@ def main(pdf_path, output_path):
         sys.exit(1)
 
 if __name__ == "__main__":
-    main("file01.pdf", "ou1.json")
-    main("file02.pdf", "ou2.json")
-    main("file03.pdf", "ou3.json")
-    main("file04.pdf", "ou4.json")
-    main("file05.pdf", "ou5.json")
+    # Expect two args: input PDF path and output JSON path
+    if len(sys.argv) != 3:
+        print("Usage: python outline_extractor.py <input_pdf_path> <output_json_path>")
+        sys.exit(1)
+
+    input_pdf  = sys.argv[1]
+    output_json = sys.argv[2]
+    main(input_pdf, output_json)
