@@ -1,6 +1,7 @@
 import json
-import pickle
 from model_trainer import OutlinePredictor
+from Code import extract_pdf_data
+import sys
 
 class OutlineExtractor:
     """
@@ -55,19 +56,11 @@ class OutlineExtractor:
             "outline": outline
         }
 
-def main():
+def main(pdf_path, output_path):
     """
     Main function to process PDF and extract outline
     """
-    import sys
-    from Code import extract_pdf_data
     
-    if len(sys.argv) != 3:
-        print("Usage: python outline_extractor.py <input.pdf> <output.json>")
-        sys.exit(1)
-    
-    pdf_path = sys.argv[1]
-    output_path = sys.argv[2]
     
     try:
         print(f"Processing {pdf_path}...")
@@ -92,4 +85,8 @@ def main():
         sys.exit(1)
 
 if __name__ == "__main__":
-    main()
+    main("file01.pdf", "ou1.json")
+    main("file02.pdf", "ou2.json")
+    main("file03.pdf", "ou3.json")
+    main("file04.pdf", "ou4.json")
+    main("file05.pdf", "ou5.json")
