@@ -153,13 +153,13 @@ re                     # Text normalization (format-only)
 ```bash
 # Clone repository
 git clone <repository-url>
-cd Challenge-1A/Aproach-2
+cd "Challenge-1A/Approach 2"
 
 # Install dependencies
 pip install PyMuPDF scikit-learn numpy
 
 # Train the model (one-time setup)
-python model_trainer.py
+python model_trainer.py "Training Data"
 
 # Extract outline from any PDF
 python outline_extractor.py input.pdf output.json
