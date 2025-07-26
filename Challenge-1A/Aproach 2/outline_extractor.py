@@ -223,17 +223,32 @@ def main(pdf_path, output_path):
         print(f"Processing {pdf_path}...")
         
         # FAST PDF extraction
-        segments_data = extract_pdf_data(pdf_path)
+        segments_json = extract_pdf_data(pdf_path)
+        segments_data = json.loads(segments_json)
+        
+        # Convert dict segments to Segment-like objects for consistency
+        processed_segments = []
+        for page_segments in segments_data:
+            page_list = []
+            for seg in page_segments:
+                # Create object-like access for dict data
+                class SegmentDict:
+                    def __init__(self, data):
+                        for key, value in data.items():
+                            setattr(self, key, value)
+                page_list.append(SegmentDict(seg))
+            processed_segments.append(page_list)
+        
         extraction_time = time.time() - start_time
         print(f"PDF extraction: {extraction_time:.2f}s")
         
-        if not segments_data:
+        if not processed_segments:
             print("No segments extracted!")
             return
         
         # FAST outline extraction
         extractor = OutlineExtractor()
-        outline = extractor.extract_outline(segments_data)
+        outline = extractor.extract_outline(processed_segments)
         processing_time = time.time() - start_time - extraction_time
         print(f"Outline processing: {processing_time:.2f}s")
         
@@ -261,6 +276,7 @@ def main(pdf_path, output_path):
         return
 
 if __name__ == "__main__":
+    
     # Expect two args: input PDF path and output JSON path
     if len(sys.argv) != 3:
         print("Usage: python outline_extractor.py <input_pdf_path> <output_json_path>")

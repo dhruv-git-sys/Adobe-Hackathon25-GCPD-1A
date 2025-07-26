@@ -1,6 +1,6 @@
 # PyMuPDF
 import fitz
-from json import dump
+from json import dumps
 import sys
 
 class Segment:
@@ -73,12 +73,14 @@ def extract_pdf_data(pdf_path, out_path=None):
     
     document.close()                        # clean up document
 
+    pages_segments_str = dumps(pages_segments, indent=2, default=lambda x: x.__dict__)
+
     print(f"Extracted {len(pages_segments)} pages")  # print summary
     if pages_segments and out_path:  # Only save to file if out_path is provided
-        with open(out_path, 'w') as f:
-            dump(pages_segments, f, indent=2, default = lambda x: x.__dict__)
+        with open(out_path, 'w', encoding='utf-8') as f:
+            f.write(pages_segments_str)
 
-    return pages_segments                   # return list of page segment lists
+    return pages_segments_str                   # return list of page segment lists
 
 
 if __name__ == "__main__":

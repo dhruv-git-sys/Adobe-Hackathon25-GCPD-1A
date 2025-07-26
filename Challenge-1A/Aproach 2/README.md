@@ -116,6 +116,9 @@ Our approach follows **5 strict design principles** for universal compatibility:
 ✅ **Universal Patterns** - Adapts to any document type  
 ✅ **Docker Ready** - CPU-only, lightweight deployment
 
+> **Note:** The Retrospective_Archive.zip file is intended for internal documentation of retrospective logs and is not part of the production pipeline.
+
+
 ---
 
 ### Libraries Used 📚

@@ -192,27 +192,42 @@ class OutlinePredictor:
         
         return features
     
-    def load_training_data(self):
+    def load_training_data(self, base_folder):
         """Load and prepare training data from PDF segments and expected JSON"""
-        training_folders = ['file01', 'file02', 'file03', 'file04', 'file05']
+        # Dynamically discover all folders in the base directory
+        if not os.path.exists(base_folder):
+            raise ValueError(f"Base folder '{base_folder}' does not exist!")
+        
+        # Only get directories, ignore files
+        training_folders = [item for item in os.listdir(base_folder) 
+                           if os.path.isdir(os.path.join(base_folder, item))]
+        
+        if not training_folders:
+            raise ValueError(f"No folders found in '{base_folder}'!")
+        
+        print(f"Found {len(training_folders)} training folders: {training_folders}")
         
         X = []
         y = []
         
         for folder in training_folders:
-            # Use correct file paths from Training Data folders
-            segmented_file = f"Training Data/{folder}/Sample Segmented Input.json"
-            expected_file = f"Training Data/{folder}/Expected Output.json"
+            # Use correct file paths from base folder
+            segmented_file = f"{base_folder}/{folder}/Sample Segmented Input.json"
+            expected_file = f"{base_folder}/{folder}/Expected Output.json"
+            pdf_file = f"{base_folder}/{folder}/Sample Input.pdf"
             
-            if not os.path.exists(segmented_file) or not os.path.exists(expected_file):
-                print(f"Warning: Missing files {segmented_file} or {expected_file}")
+            if not os.path.exists(expected_file):
+                print(f"Warning: Missing expected file {expected_file}")
                 continue
                 
             print(f"Processing {folder}...")
             
-            # Load pre-segmented data instead of re-processing PDF
-            with open(segmented_file, 'r') as f:
-                segments_data = json.load(f)
+            # Always generate segmented data from PDF (create/overwrite JSON)
+            if os.path.exists(pdf_file):
+                segments_data = json.loads(extract_pdf_data(pdf_file, segmented_file))
+            else:
+                print(f"Warning: PDF file {pdf_file} not found")
+                continue
             
             # Convert dict segments to Segment-like objects for consistency
             processed_segments = []
@@ -435,10 +450,10 @@ class OutlinePredictor:
         
         return lcs_len / max_len if max_len > 0 else 0.0
     
-    def train(self):
+    def train(self, base_folder):
         """Train the prediction model using only formatting characteristics"""
         print("Loading training data...")
-        X, y = self.load_training_data()
+        X, y = self.load_training_data(base_folder)
         
         if len(X) == 0:
             raise ValueError("No training data found!")
@@ -675,11 +690,21 @@ class OutlinePredictor:
         print(f"Model loaded from {filepath}")
 
 if __name__ == "__main__":
+    import sys
+    
+    # Check if base folder parameter is provided
+    if len(sys.argv) < 2:
+        print("Usage: python model_trainer.py <training_data_folder>")
+        print("Example: python model_trainer.py \"Training Data\"")
+        sys.exit(1)
+    
+    base_folder = sys.argv[1]
+    
     predictor = OutlinePredictor()
     
     try:
         # Train the model
-        predictor.train()
+        predictor.train(base_folder)
         
         # Save the model
         predictor.save_model('outline_model.pkl')
