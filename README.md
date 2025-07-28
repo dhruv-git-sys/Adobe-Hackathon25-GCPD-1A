@@ -39,7 +39,7 @@
 
 ### Approach 💡
 
-**Bonus/Penalty-Based System for Document Structure Extractor** using **formatting characteristics only** - truly language-agnostic system that works on any PDF regardless of language or content type.
+**Bonus/Penalty-Based System for Document Outline Extractor** using **formatting characteristics only** - truly language-agnostic system that works on any PDF regardless of language or content type.
 
 #### 🎯 **Core Innovation: Rule-Compliant Design**
 
@@ -123,11 +123,7 @@ cd Adobe-Hackathon25-GCPD
 # Build Docker image (AMD64 compatible)
 docker build --platform linux/amd64 -t mysolutionname:somerandomidentifier .
 
-# Create input/output directories
-mkdir input output
-
-# Add PDF files to process
-cp your-document.pdf input/
+#Paste all Sample PDFs in input
 
 # Run batch processing (processes all PDFs in input/ directory)
 docker run --rm -v "$(pwd)/input":/app/input -v "$(pwd)/output":/app/output --network none mysolutionname:somerandomidentifier
