@@ -1,16 +1,17 @@
 # Adobe India Hackathon 2025
+
 > [**Connecting the Dots ...**](https://d8it4huxumps7.cloudfront.net/uploads/submissions_case/6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc.pdf)
 
 ## 👥 Team
 
-**Team Name:** 🚀 _GCPD_  
-**College:** 🎓 _The National Institute of Engineering, Mysore_
+**Team Name:** 🚀 *GCPD*
+**College:** 🎓 *The National Institute of Engineering, Mysore*
 
-| Name                                                  |     Role    |
-|-------------------------------------------------------|-------------|
-| [Ankit Kumar Shah ](https://github.com/ankitkrshah30) |**👑 Leader** |
-| [Dhruv Agrawal](https://github.com/dhruv-git-sys)     |⭐ Member     |
-| [Arnav Sharma](https://github.com/ArnavSharma2908/)   |⭐ Member    |
+| Name                                                 | Role          |
+| ---------------------------------------------------- | ------------- |
+| [Ankit Kumar Shah](https://github.com/ankitkrshah30) | **👑 Leader** |
+| [Dhruv Agrawal](https://github.com/dhruv-git-sys)    | ⭐ Member      |
+| [Arnav Sharma](https://github.com/ArnavSharma2908/)  | ⭐ Member      |
 
 ---
 
@@ -18,10 +19,10 @@
 
 ### 🧠 Problem Statement
 
-- Input: 📄 PDF file (≤ 50 pages)
-- Output: 📝 JSON with `title`, `H1`, `H2`, `H3` headings + page numbers
-- Must run offline in Docker (CPU-only, ≤10s, ≤200MB model) 💻
-- JSON Example:
+* **Input**: 📄 PDF file (≤ 50 pages)
+* **Output**: 📝 JSON with `title`, `H1`, `H2`, `H3` headings + page numbers
+* **Constraints**: Offline, Dockerized (CPU-only), ≤10s runtime, ≤200MB model size
+
 ```json
 {
   "title": "Understanding AI",
@@ -37,140 +38,68 @@
 
 ## 🛠 Proposed Solution
 
-### Approach 💡
+### 🎯 Core Innovation: Rule-Compliant Design
 
-**Bonus/Penalty-Based System for Document Outline Extractor** using **formatting characteristics only** - truly language-agnostic system that works on any PDF regardless of language or content type.
+Our approach is built on **5 strict rules** for universal, robust outline extraction:
 
-#### 🎯 **Core Innovation: Rule-Compliant Design**
+1. **No Hardcoded Font Sizes**: Uses relative size analysis only.
+2. **No Hardcoded Keywords**: No assumptions about text content or language.
+3. **No Fixed Thresholds**: All decisions are data-adaptive.
+4. **Adaptive Statistical Analysis**: Document-wide profiling and z-scores.
+5. **Truly Generic Processing**: Works for any language, layout, or format.
 
-Our approach follows **5 strict design principles** for universal compatibility:
+### 🧱 Architecture
 
-**Rule #1: No Hardcoded Font Sizes** 🚫
-- Zero fixed checks like `if size > 12.0`
-- Pure statistical approach using relative font size analysis
+* **`pdf2segment.py`**: Extracts text segments with formatting metadata using PyMuPDF
 
-**Rule #2: No Hardcoded Keywords** 🚫  
-- No language-dependent words like "introduction", "chapter", "section"
-- Pattern recognition using formatting features only
+  * Merges spans with identical styling
+  * Outputs attributes like `font`, `size`, `flags`, `bbox`, `text`
 
-**Rule #3: No Fixed Thresholds** 🚫
-- Zero absolute checks like `confidence > 0.5`
-- Adaptive thresholds tuned per document context
+* **`main_extractor.py`**:
 
-**Rule #4: Adaptive Statistical Analysis Only** 📊
-- Relative ratios and document-wide statistical profiles
-- Dynamic analysis based on document structure
+  * **Phase 1**: Style profiling
+  * **Phase 2**: Standalone detection
+  * **Phase 3**: Dynamic heading assignment and output
 
-**Rule #5: Truly Generic Processing** 🌍
-- Works on all PDF types: forms, manuals, reports, papers
-- Handles complex layouts: multi-column, mixed content, any language
+### 🌟 Highlights
 
-#### 🏗️ **System Architecture**
-
-1. **`pdf2segment.py`** - PDF Text Extraction & Segmentation
-   - Extracts text segments with formatting metadata using PyMuPDF
-   - Intelligently merges spans with same styling
-   - **Key Attributes**: `font`, `size`, `flags`, `color`, `bbox`, `text`
-   - Outputs structured segmented data for analysis
-
-2. **`main_extractor.py`** - Outline Analysis & Extraction
-   - **Phase 1**: Style profiling and standalone text detection
-   - **Phase 2**: Dynamic hierarchy assignment based on font sizes
-   - **Phase 3**: Structured outline generation with proper ordering
-   - Handles both PDF and JSON inputs for flexibility
-
-#### 🎯 **Key Features**
-
-- **Style-Based Analysis**: Groups text by font, size, and formatting flags
-- **Standalone Detection**: Identifies headings by their positioning context  
-- **Dynamic Hierarchy**: Assigns H1/H2/H3 levels based on relative font sizes
-- **Universal Compatibility**: Works with any language or document type
-
-#### 🌟 **Key Advantages**
-
-✅ **Zero Language Dependencies** - Works with any language  
-✅ **Pure Formatting Analysis** - No content-based assumptions  
-✅ **High Performance** - Fast processing without ML overhead  
-✅ **Universal Patterns** - Adapts to any document type  
-✅ **Docker Ready** - CPU-only, lightweight deployment
-
+* 🚀 **Language-Independent**: Works with any script, language, or symbol set
+* ⚙️ **Pure Formatting-Based**: Uses visual and positional clues, not semantics
+* 🧠 **Lightweight & Fast**: ML-free, <200MB, Docker-friendly, completes in seconds
+* 📁 **Batch Ready**: Automatically processes all files in a directory
 
 ---
 
-### Libraries Used 📚
+## 📚 Libraries Used
 
 ```python
-# PDF Processing  
-PyMuPDF>=1.20.0        # PDF text extraction with formatting metadata
-
-# Standard Libraries
-json                   # JSON output formatting
-sys                    # Command line arguments
-collections            # Data structures (defaultdict)
+PyMuPDF>=1.20.0    # PDF processing
+json               # Output formatting
+sys                # Command line args
+collections        # Data structures
 ```
 
 ---
 
-### Installation/Setup ⚙️
+## ⚙️ Setup & Usage
 
-#### 🐳 **Docker Setup (Recommended for Hackathon Submission)**
+### 🐳 Docker (Recommended)
 
 ```bash
-# Clone repository
-git clone <repository-url>
+git clone https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD
 cd Adobe-Hackathon25-GCPD
-
-# Build Docker image (AMD64 compatible)
 docker build --platform linux/amd64 -t mysolutionname:somerandomidentifier .
-
-#Paste all Sample PDFs in input
-
-# Run batch processing (processes all PDFs in input/ directory)
 docker run --rm -v "$(pwd)/input":/app/input -v "$(pwd)/output":/app/output --network none mysolutionname:somerandomidentifier
-
-# Check results
-ls output/
-cat output/*.json
 ```
 
-#### 💻 **Local Development Setup**
+### 💻 Local Development
 
 ```bash
-# Clone repository
-git clone <repository-url>
+git clone https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD
 cd Adobe-Hackathon25-GCPD
-
-# Install dependencies
 pip install PyMuPDF
-
-# Extract outline from single PDF
 python main_extractor.py input.pdf output.json
 ```
-
-#### 🚀 **Quick Start Examples**
-
-**Docker (Batch Processing):**
-```bash
-# Process multiple PDFs at once
-docker run --rm -v "$(pwd)/input":/app/input -v "$(pwd)/output":/app/output --network none mysolutionname:somerandomidentifier
-```
-
-**Local (Single File):**
-```bash
-# Process a sample document
-python main_extractor.py Sample.pdf output.json
-
-# Output: Structured JSON with title and hierarchical headings
-```
-
-#### 📋 **Docker Requirements Met**
-- ✅ **AMD64 Platform**: Compatible with `linux/amd64` architecture
-- ✅ **Offline Processing**: No network dependencies (`--network none`)  
-- ✅ **CPU-Only**: No GPU requirements
-- ✅ **Lightweight**: Model size well under 200MB (PyMuPDF only)
-- ✅ **Batch Processing**: Automatically processes all PDFs from `/app/input`
-- ✅ **Standard Output**: Generates `filename.json` for each `filename.pdf`
-
 
 ---
 
