@@ -41,7 +41,7 @@
 
 ---
 
-## 🛠 Proposed Solution
+## 🛠 Approach
 
 ### 🎯 Core Innovation: Rule-Compliant Design
 
@@ -55,7 +55,7 @@ Our approach is built on **5 strict rules** for universal, robust outline extrac
 
 ### 🧱 Architecture
 
-* **`pdf2segment.py`**: Extracts text segments with formatting metadata using PyMuPDF
+* **`pdf2segment.py`**: Extracts text segments with formatting metadata using PyMuPDF and convert complex PDF data to simpler segmented based form
 
   * Merges spans with identical styling
   * Outputs attributes like `font`, `size`, `flags`, `bbox`, `text`
@@ -63,7 +63,7 @@ Our approach is built on **5 strict rules** for universal, robust outline extrac
 * **`main_extractor.py`**:
 
   * **Phase 1**: Style profiling
-  * **Phase 2**: Standalone detection
+  * **Phase 2**: Standalone detection 
   * **Phase 3**: Dynamic heading assignment and output
 
 ### 🌟 Highlights
@@ -86,12 +86,12 @@ collections        # Data structures
 
 ---
 
-## ⚙️ Setup & Usage
+## ⚙️ Build & Usage
 
 ### 🐳 Docker (Recommended)
 
 ```bash
-git clone https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD
+git clone https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD-1A.git
 cd Adobe-Hackathon25-GCPD
 # 📂 Place your PDF files inside the ./input folder (mapped to /app/input in Docker)
 docker build --platform linux/amd64 -t mysolutionname:somerandomidentifier .
@@ -101,7 +101,7 @@ docker run --rm -v "$(pwd)/input":/app/input -v "$(pwd)/output":/app/output --ne
 ### 💻 Local Development
 
 ```bash
-git clone https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD
+git clone https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD-1A.git
 cd Adobe-Hackathon25-GCPD
 pip install PyMuPDF
 python main_extractor.py input.pdf output.json
