@@ -53,6 +53,24 @@ Our approach is built on **5 strict rules** for universal, robust outline extrac
 4. **Adaptive Statistical Analysis**: Document-wide profiling and z-scores.
 5. **Truly Generic Processing**: Works for any language, layout, or format.
 
+### 📁 File Structure
+
+```
+Adobe-Hackathon25-GCPD/
+├── 📄 main_entry.py          # Docker and batch processing entry point
+├── 🔧 main_extractor.py      # Core outline extraction engine
+├── 📝 pdf2segment.py         # PDF text extraction and segmentation
+├── 🐳 Dockerfile             # Docker container configuration
+├── 📋 requirements.txt       # Python dependencies (PyMuPDF)
+├── 📖 README.md              # Project documentation
+├── 📂 input/                 # Input directory for PDF files
+├── 📂 output/                # Output directory for JSON results
+├── 📄 Sample.pdf             # Sample test document
+├── 📄 output.json            # Sample output result
+├── 🗃️ Retrospective Archive.zip  # Development history (not part of workflow)
+└── 🗂️ __pycache__/           # Python bytecode cache
+```
+
 ### 🧱 Architecture
 
 * **`pdf2segment.py`**: Extracts text segments with formatting metadata using PyMuPDF and convert complex PDF data to simpler segmented based form
@@ -73,24 +91,6 @@ Our approach is built on **5 strict rules** for universal, robust outline extrac
   * Generates corresponding JSON files in output directory
 
 > **Note**: `Retrospective Archive.zip` contains previous development logs and alternative approaches explored during the problem-solving process. It is not part of the main project workflow and can be safely ignored for submission purposes.
-
-### 📁 File Structure
-
-```
-Adobe-Hackathon25-GCPD/
-├── 📄 main_entry.py          # Docker and batch processing entry point
-├── 🔧 main_extractor.py      # Core outline extraction engine
-├── 📝 pdf2segment.py         # PDF text extraction and segmentation
-├── 🐳 Dockerfile             # Docker container configuration
-├── 📋 requirements.txt       # Python dependencies (PyMuPDF)
-├── 📖 README.md              # Project documentation
-├── 📂 input/                 # Input directory for PDF files
-├── 📂 output/                # Output directory for JSON results
-├── 📄 Sample.pdf             # Sample test document
-├── 📄 output.json            # Sample output result
-├── 🗃️ Retrospective Archive.zip  # Development history (not part of workflow)
-└── 🗂️ __pycache__/           # Python bytecode cache
-```
 
 
 ### 🌟 Highlights
