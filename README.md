@@ -9,7 +9,7 @@
 
 ## 👥 Team
 
-**Team Name:** 🚀 *GCPD* 
+**Team Name:** 🚀 *GCPD*  
 **College:** 🎓 *The National Institute of Engineering, Mysore*
 
 | Name                                                 | Role          |
