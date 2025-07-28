@@ -72,6 +72,27 @@ Our approach is built on **5 strict rules** for universal, robust outline extrac
   * Processes all PDFs from input directory
   * Generates corresponding JSON files in output directory
 
+> **Note**: `Retrospective Archive.zip` contains previous development logs and alternative approaches explored during the problem-solving process. It is not part of the main project workflow and can be safely ignored for submission purposes.
+
+### 📁 File Structure
+
+```
+Adobe-Hackathon25-GCPD/
+├── 📄 main_entry.py          # Docker and batch processing entry point
+├── 🔧 main_extractor.py      # Core outline extraction engine
+├── 📝 pdf2segment.py         # PDF text extraction and segmentation
+├── 🐳 Dockerfile             # Docker container configuration
+├── 📋 requirements.txt       # Python dependencies (PyMuPDF)
+├── 📖 README.md              # Project documentation
+├── 📂 input/                 # Input directory for PDF files
+├── 📂 output/                # Output directory for JSON results
+├── 📄 Sample.pdf             # Sample test document
+├── 📄 output.json            # Sample output result
+├── 🗃️ Retrospective Archive.zip  # Development history (not part of workflow)
+└── 🗂️ __pycache__/           # Python bytecode cache
+```
+
+
 ### 🌟 Highlights
 
 * 🚀 **Language-Independent**: Works with any script, language, or symbol set
@@ -99,6 +120,7 @@ collections        # Data structures
 ```bash
 git clone https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD-1A.git
 cd Adobe-Hackathon25-GCPD
+
 # 📂 Place your PDF files inside the ./input folder (mapped to /app/input in Docker)
 docker build --platform linux/amd64 -t mysolutionname:somerandomidentifier .
 docker run --rm -v "$(pwd)/input":/app/input -v "$(pwd)/output":/app/output --network none mysolutionname:somerandomidentifier
@@ -110,8 +132,10 @@ docker run --rm -v "$(pwd)/input":/app/input -v "$(pwd)/output":/app/output --ne
 git clone https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD-1A.git
 cd Adobe-Hackathon25-GCPD
 pip install PyMuPDF
+
 # For single file processing:
 python main_extractor.py input.pdf output.json
+
 # For batch processing (same as Docker):
 # 📂 Place your PDF files inside the ./input folder
 python main_entry.py
