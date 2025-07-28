@@ -2,6 +2,11 @@
 
 > [**Connecting the Dots ...**](https://d8it4huxumps7.cloudfront.net/uploads/submissions_case/6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc.pdf)
 
+## 🔗 Repositories
+
+* 🔹 [Round 1A Repository](https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD-1A)
+* 🔹 [Round 1B Repository](https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD-1B)
+
 ## 👥 Team
 
 **Team Name:** 🚀 *GCPD*
@@ -88,6 +93,7 @@ collections        # Data structures
 ```bash
 git clone https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD
 cd Adobe-Hackathon25-GCPD
+# 📂 Place your PDF files inside the ./input folder (mapped to /app/input in Docker)
 docker build --platform linux/amd64 -t mysolutionname:somerandomidentifier .
 docker run --rm -v "$(pwd)/input":/app/input -v "$(pwd)/output":/app/output --network none mysolutionname:somerandomidentifier
 ```
