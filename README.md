@@ -60,11 +60,17 @@ Our approach is built on **5 strict rules** for universal, robust outline extrac
   * Merges spans with identical styling
   * Outputs attributes like `font`, `size`, `flags`, `bbox`, `text`
 
-* **`main_extractor.py`**:
+* **`main_extractor.py`**: Core outline extraction engine
 
   * **Phase 1**: Style profiling
   * **Phase 2**: Standalone detection 
   * **Phase 3**: Dynamic heading assignment and output
+
+* **`main_entry.py`**: Docker and batch processing entry point
+
+  * Auto-detects Docker vs local environment
+  * Processes all PDFs from input directory
+  * Generates corresponding JSON files in output directory
 
 ### 🌟 Highlights
 
@@ -104,7 +110,11 @@ docker run --rm -v "$(pwd)/input":/app/input -v "$(pwd)/output":/app/output --ne
 git clone https://github.com/dhruv-git-sys/Adobe-Hackathon25-GCPD-1A.git
 cd Adobe-Hackathon25-GCPD
 pip install PyMuPDF
+# For single file processing:
 python main_extractor.py input.pdf output.json
+# For batch processing (same as Docker):
+# 📂 Place your PDF files inside the ./input folder
+python main_entry.py
 ```
 
 ---

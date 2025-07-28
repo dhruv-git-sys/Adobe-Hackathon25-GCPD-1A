@@ -9,8 +9,15 @@ from pathlib import Path
 from main_extractor import process_main
 
 def main():
-    input_dir = Path("/app/input")
-    output_dir = Path("/app/output")
+    # Simple: Try Docker paths first, fallback to local paths
+    if Path("/app/input").exists():
+        input_dir = Path("/app/input")
+        output_dir = Path("/app/output")
+        print("Using Docker paths")
+    else:
+        input_dir = Path("input")
+        output_dir = Path("output")
+        print("Using local paths")
     
     # Ensure output directory exists
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -19,7 +26,7 @@ def main():
     pdf_files = list(input_dir.glob("*.pdf"))
     
     if not pdf_files:
-        print("No PDF files found in /app/input")
+        print(f"No PDF files found in {input_dir}")
         return
     
     print(f"Processing {len(pdf_files)} PDF file(s)...")
